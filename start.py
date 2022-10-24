@@ -7,7 +7,8 @@ if __name__ == "__main__":
         "привет": server.command_hi,
         "пока": server.command_bye,
         "сейчас": server.command_weather_now,
-        "завтра": server.command_weather_tomorrow
+        "завтра": server.command_weather_tomorrow,
+        "help": server.command_help
     }
     print("Сервер запущен!")
     server.start(COMMAND_LIST)
