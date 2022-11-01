@@ -18,9 +18,15 @@ class BaseServer:
 
     def _command_worker(self, event):
         if event.type == VkEventType.MESSAGE_NEW:
-            if event.to_me:
+            if event.to_me: # привет
                 print('Получено новое сообщение.')
-                self.__commands[event.text.lower()](event)
+                if self.__commands.get(event.text.lower()):
+                    self.__commands[event.text.lower()](event)
+                else:
+                    self.command_weather_city(event)
+
+    def command_weather_city(self, event):
+        pass
 
 
 class UtilsServer(BaseServer):
@@ -39,7 +45,7 @@ class Server(UtilsServer):
     def command_hi(self, event):
         self._send_msg(
             event.user_id,
-            'Привет, я бот, показывающий погоду! Когда ты хочешь узнать погоду: сейчас или завтра?'
+            'Привет, я бот, показывающий информацию о погодных условиях!'
         )
 
     def command_bye(self, event):
@@ -48,20 +54,20 @@ class Server(UtilsServer):
             f'Пока, {event.user_id}, приходи завтра!'
         )
 
-    def command_weather_now(self, event):
+    def command_weather(self, event):
         self._send_msg(
             event.user_id,
-            weather.weather_now()
+            "Введите город: "
         )
 
-    def command_weather_tomorrow(self, event):
+    def command_weather_city(self, event):
         self._send_msg(
             event.user_id,
-            weather.weather_tomorrow()
+            weather.get_weather(event.text)
         )
 
     def command_help(self, event):
         self._send_msg(
             event.user_id,
-            'Введите сообщение из списка: "привет", "сейчас", "завтра", "пока", "help".'
+            'Введите сообщение из списка: "привет", "погода", "пока", "help"'
         )
