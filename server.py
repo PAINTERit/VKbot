@@ -1,15 +1,15 @@
 import random
-from typing import Any
 
 import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
-from vk_api.longpoll import VkEventType, VkLongPoll, Event
+from vk_api.longpoll import Event, VkEventType, VkLongPoll
 
 import weather
-from config import VK_TOKEN, VK_GROUP_ID
+from abstract.abstract_server import AbstractBaseServer, AbstractKeyboardMixin
+from config import VK_GROUP_ID, VK_TOKEN
 
 
-class BaseServer:
+class BaseServer(AbstractBaseServer):
     """
     Используется для создания сессии в ВК и запуска команд.
     """
@@ -34,12 +34,11 @@ class BaseServer:
         :param event: Event
         :return: None
         """
-        if event.type == VkEventType.MESSAGE_NEW:
-            if event.to_me:
-                if self.__commands.get(event.text.lower()):
-                    self.__commands[event.text.lower()](event)
-                else:
-                    self.command_weather_city(event)
+        if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+            if self.__commands.get(event.text.lower()):
+                self.__commands[event.text.lower()](event)
+            else:
+                self.command_weather_city(event)
 
     def command_weather_city(self, event: Event) -> None:
         """
@@ -54,12 +53,13 @@ class UtilsServer(BaseServer):
     """
     Используется для добавления метода отправки сообщения.
     """
-    def _send_msg(self, user_id: Any, message: Any, keyboard: Any = None) -> None:
+
+    def _send_msg(self, user_id: int, message: str, keyboard: VkKeyboard = None) -> None:
         """
         Метод для отправки сообщения пользователю.
-        :param user_id: Any (id пользователя)
-        :param message: Any (сообщение для пользователя)
-        :param keyboard: Any (клавиатура)
+        :param user_id: int (id пользователя)
+        :param message: str (сообщение для пользователя)
+        :param keyboard: VkKeyboard
         :return: None
         """
         if keyboard:
@@ -82,6 +82,7 @@ class Server(UtilsServer):
     """
     Испотзуется для создания методов для бота.
     """
+
     def __init__(self):
         self.keyboard = KeyboardMixin()
 
@@ -165,10 +166,11 @@ class Server(UtilsServer):
         )
 
 
-class KeyboardMixin(VkKeyboard):
+class KeyboardMixin(VkKeyboard, AbstractKeyboardMixin):
     """
     Используется для создания кнопок в боте.
     """
+
     @staticmethod
     def get_start() -> VkKeyboard:
         """
