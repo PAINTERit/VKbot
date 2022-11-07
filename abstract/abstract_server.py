@@ -49,4 +49,5 @@ class AbstractKeyboardMixin(ABC):
         Показывает все основные команды.
         :return: None
         """
+
         pass
