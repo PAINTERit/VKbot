@@ -16,7 +16,7 @@ def get_weather_from_coords(latitude: float, longitude: float) -> str:
     """
     data = requests.get(
         f"https://api.weather.yandex.ru/v2/forecast?lat={latitude}&lon={longitude}&limit=1&hours=false&extra=true",
-        headers=headers,
+        headers=headers
     )
     return get_weather_data(data)
 
@@ -31,7 +31,7 @@ def get_weather_from_city(city: str) -> str:
     location = geolocator.geocode(city)
     data = requests.get(
         f"https://api.weather.yandex.ru/v2/forecast?lat={location.latitude}&lon={location.longitude}&limit=1&hours=false&extra=true",
-        headers=headers,
+        headers=headers
     )
     return get_weather_data(data)
 
