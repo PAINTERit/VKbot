@@ -66,7 +66,7 @@ class KeyboardMixin(VkKeyboard, AbstractKeyboardMixin):
         return keyboard
 
     @staticmethod
-    def get_standart_keyboard() -> VkKeyboard:
+    def keyboard_standart_keyboard() -> VkKeyboard:
         """
         Стандартная клавитаутра.
         :return: VkKeyboard
@@ -80,7 +80,7 @@ class KeyboardMixin(VkKeyboard, AbstractKeyboardMixin):
         return keyboard
 
     @staticmethod
-    def get_weather() -> VkKeyboard:
+    def keyboard_weather() -> VkKeyboard:
         """
         Клавитаутра геолокации.
         :return: VkKeyboard
@@ -92,7 +92,7 @@ class KeyboardMixin(VkKeyboard, AbstractKeyboardMixin):
         return keyboard
 
     @staticmethod
-    def get_help() -> VkKeyboard:
+    def keyboard_help() -> VkKeyboard:
         """
         Клавитаутра помощи.
         :return: VkKeyboard
@@ -157,7 +157,7 @@ class Server(UtilsServer):
         self._send_msg(
             event.user_id,
             "Привет, я бот, показывающий информацию о погодных условиях!",
-            keyboard=self.keyboard.get_standart_keyboard()
+            keyboard=self.keyboard.keyboard_standart_keyboard()
         )
 
     def command_bye(self, event: Event) -> None:
@@ -181,7 +181,7 @@ class Server(UtilsServer):
         self._send_msg(
             event.user_id,
             "Введите страну, город или улицу для получения погоды:",
-            keyboard=self.keyboard.get_weather()
+            keyboard=self.keyboard.keyboard_weather()
         )
 
     def command_weather_coords(self, event: Event) -> None:
@@ -194,7 +194,7 @@ class Server(UtilsServer):
             event.user_id,
             weather.get_weather_from_coords(
                 self._get_vk_geo(event)[0], self._get_vk_geo(event)[1]),
-            keyboard=self.keyboard.get_help()
+            keyboard=self.keyboard.keyboard_help()
         )
 
     def command_weather_city(self, event: Event) -> None:
@@ -207,7 +207,7 @@ class Server(UtilsServer):
             self._send_msg(
                 event.user_id,
                 weather.get_weather_from_city(event.text),
-                keyboard=self.keyboard.get_help()
+                keyboard=self.keyboard.keyboard_help()
             )
         else:
             self.command_weather_coords(event)
@@ -221,5 +221,5 @@ class Server(UtilsServer):
         self._send_msg(
             event.user_id,
             "Вот какие команды я могу исполнить:",
-            keyboard=self.keyboard.get_standart_keyboard()
+            keyboard=self.keyboard.keyboard_standart_keyboard()
         )

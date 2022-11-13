@@ -33,7 +33,7 @@ class AbstractKeyboardMixin(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_standart_keyboard() -> None:
+    def keyboard_standart_keyboard() -> None:
         """
         Клавиатура со всеми основными командами.
         :return: None
@@ -42,7 +42,7 @@ class AbstractKeyboardMixin(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_help() -> None:
+    def keyboard_help() -> None:
         """
         Клавиатура помощи. Появляется в конце каждого действия.
         Показывает все основные команды.
