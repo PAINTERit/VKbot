@@ -5,7 +5,7 @@ class AbstractBaseServer(ABC):
     @abstractmethod
     def start(self, command) -> None:
         """
-        Данный метод будет запускать команды из словаря.
+        Данный метод будет запускать прослушивание сервера.
         :param command: dict
         :return: None
         """
@@ -14,7 +14,7 @@ class AbstractBaseServer(ABC):
     @abstractmethod
     def _command_worker(self, event) -> None:
         """
-        Данный метод будет выбирать команду, в зависимости от того, что напишет пользователь.
+        Данный метод будет выбирать и запускать команду, в зависимости от того, что напишет пользователь.
         :param event: Event
         :return: None
         """
@@ -24,10 +24,9 @@ class AbstractBaseServer(ABC):
 class AbstractKeyboardMixin(ABC):
     @staticmethod
     @abstractmethod
-    def get_start() -> None:
+    def keyboard_start() -> None:
         """
         Клавитаура для начала общения с ботом.
-        Данная клавиатура появляется при прощании с ботом.
         :return: None
         """
         pass
