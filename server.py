@@ -42,7 +42,7 @@ class BaseServer(AbstractBaseServer):
 
     def command_weather_city(self, event: Event) -> None:
         """
-        Заглушка для дальнейшего использования
+        Заглушка для дальнейшего использования.
         :param event: Event
         :return: None
         """

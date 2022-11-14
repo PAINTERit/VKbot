@@ -14,7 +14,7 @@ class AbstractBaseServer(ABC):
     @abstractmethod
     def _command_worker(self, event) -> None:
         """
-        Данный метод будет выбирать и запускать команду, в зависимости от того, что напишет пользователь
+        Данный метод будет выбирать и запускать команду, в зависимости от того, что напишет пользователь.
         :param event: Event
         :return: None
         """
